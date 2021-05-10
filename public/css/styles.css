@@ -74,6 +74,7 @@ a,
 a:hover {
     color: #223344;
     text-decoration: none;
+    outline: none;
 }
 
 .icon-bar {

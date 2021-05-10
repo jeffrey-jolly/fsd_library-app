@@ -49,6 +49,7 @@ var signupRouter = require('./src/routes/signupRoutes')(nav);
 var addbookRouter = require('./src/routes/addbookRoutes')(nav);
 var addauthorRouter = require('./src/routes/addauthorRoutes')(nav);
 
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use(express.static('./public'));
