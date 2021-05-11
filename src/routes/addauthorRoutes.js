@@ -1,13 +1,27 @@
 const express = require('express');
 var addauthorRouter = express.Router();
-function author_routers(nav){
+const Authordata = require('../model/authorData');
 
-    addauthorRouter.get('/',function(req,res){
-        res.render('add_author',
-        {
-            title:'Add New Author',
+function author_routers(nav) {
+
+    addauthorRouter.get('/', function(req, res) {
+        res.render('add_author', {
+            title: 'Add New Author',
             nav
         });
+    });
+
+    addauthorRouter.post('/add', function(req, res) {
+        var item = {
+            authorname: req.body.authorname,
+            description: req.body.description,
+            image: req.body.image
+
+        }
+        var author = Authordata(item);
+        author.save();
+        res.redirect('/authors');
+
     });
 
     return addauthorRouter;
