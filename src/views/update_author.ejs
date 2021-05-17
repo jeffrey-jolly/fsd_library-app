@@ -40,7 +40,6 @@
         <li>
           <a href="/signup">Sign Up</a>
         </li> -->
-        <form action="/home" method="GET"  onsubmit="alert('Redirected to home page to logout')"><br><button style='background-color: #111166;'>Log Out</button></form>
     </ul>
     </nav>
   </div>
@@ -50,7 +49,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7">
-        <h1>Authors
+        <h1>Update Author
           <p class="lead"></p>
         </h1>
       </div>
@@ -87,42 +86,33 @@
         <div class="panel-body">
           
           
-          
           <!--/stories-->
-          <div class="row">    
+          <form action="/add_author/update/<%=author._id%>" method = "POST" class="col-lg-5-signin" enctype="multipart/form-data" style = "width: 50%; margin-left: 25%; margin-top: 5%;" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="name" class="form-label" style="margin-left: 43%;">Name</label>
+              <input type="text" class="form-control" name="name" id="title" value="<%=author.name%>" required aria-describedby="emailHelp">
+              <label for="name_error" class="form-label" id="name_error"></label>
+            </div>
+            <div class="mb-3">
+              <label for="author" class="form-label" style="margin-left: 39%;">Short Description</label>
+              <input type="text" class="form-control" name="description" id="author" value="<%=author.description%>" required>
+              <label for="author_error" class="form-label" id="author_error"></label>
+            </div><br>
+            <div class="mb-3">
+                <label for="imgauthor" class="form-label">Re-Upload Author Image</label>
+                <input type="file" name="image" id="imgauthor" accept="image/*" required>
+            </div><br>
             <br>
-            <div class="col-md-2 col-sm-3 text-center">
-              <a class="story-title" href="#"><img alt="" src="/uploads/<%=author.image%>" style="width:100px;height:100px" class="img-circle"></a>
-            </div>
-            <div class="col-md-10 col-sm-9">
-              <h3><%=author.name%></h3>
-              <div class="row">
-                <div class="col-xs-9">
-                  <!-- <h4><span class="label label-default"><%=author.novel%></span></h4><h4> -->
-                  <small style="font-family:courier,'new courier';" class="text-muted"> 
-                  </h4></small>
-                  <p style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"><%=author.description%></p>
-                </div>
-                <div class="col-xs-3"></div>
-              </div>
-              <br><br>
-            </div>
-          </div>
-          <hr>
-          
-         
-          <!--/stories-->
+            <button type="submit" class="btn btn-primary" style="margin-left: 40%;">Submit</button>
+          </form>                                     
+                 
         
-        </div>
-      </div>
-                                                                                       
-	                                                
-                                                      
+        
+
    	</div><!--/col-12-->
   </div>
 </div>
-                                                
-                                                                                
+                                                                                                                             
 <hr>
 
 <div class="container" id="footer">
@@ -165,5 +155,11 @@
 	<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
+        <!-- <script>
+            function alert(){
+                alert('Author has been added to the Library');
+            }
+        </script> -->
+
 	</body>
 </html>

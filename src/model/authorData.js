@@ -1,17 +1,22 @@
+//Accessing Mongoose Package
 const mongoose = require('mongoose');
+
+//Database connection
 mongoose.connect('mongodb+srv://userone:user0ne@fsdfiles.gpcsd.mongodb.net/LIBRARYAPP?retryWrites=true&w=majority');
+// mongoose.connect('mongodb://localhost:27017/library');
 
-//Schema Defenition
-const Schema = mongoose.Schema;
+//Schema definition
+const schema = mongoose.Schema;
 
-const AuthorSchema = new Schema({
-    authorname: String,
+
+const AuthorSchema = new schema({
+    name: String,
     description: String,
-    image: String
-
+    image: String,
 });
 
-//Model Creation
-var Authordata = mongoose.model('authorData', AuthorSchema);
+//Model creation
+const authorData = mongoose.model('authorData', AuthorSchema);
 
-module.exports = Authordata;
+//Export method
+module.exports = authorData;

@@ -1,61 +1,59 @@
 const express = require("express");
 const booksRouter = express.Router();
-const Bookdata = require('../model/bookData');
-
-function router(nav) {
-    // var books = [{
-    //         title: "The Da Vinci Code",
-    //         author: "Dan Brown",
-    //         genre: "Mystery Thriller",
-    //         image: "davincicode.jpg",
-    //         description: "The Da Vinci Code is a 2003 mystery thriller novel by Dan Brown. It is Brown's second novel to include the character Robert Langdon: the first was his 2000 novel Angels & Demons. The Da Vinci Code follows 'symbologist' Robert Langdon and cryptologist Sophie Neveu after a murder in the Louvre Museum in Paris causes them to become involved in a battle between the Priory of Sion and Opus Dei over the possibility of Jesus Christ and Mary Magdalene having had a child together."
+const bookData = require('../model/bookData'); 
+function router(nav){
+    // var books = [
+    //     {
+    //         title: "Tom and Jerry",
+    //         author: "Joseph Barbara",
+    //         genre : "Cartoon",
+    //         image: "TomandJerryTitleCardc.jpg",
+    //         description: "Tom and Jerry is an American animated media franchise and series of comedy short films created in 1940 by William Hanna and Joseph Barbera. The series centers on the rivalry between the titular characters of a cat named Tom and a mouse named Jerry."
     //     },
     //     {
-    //         title: "The Alchemist",
-    //         author: "Paulo Coelho",
-    //         genre: "Fantasy",
-    //         image: "alchemist.jpg",
-    //         description: "Santiago, a young shepherd living in the hills of Andalucia, feels that there is more to life than his humble home and his flock. One day he finds the courage to follow his dreams into distant lands, each step galvanised by the knowledge that he is following the right path: his own. The people he meets along the way, the things he sees and the wisdom he learns are life-changing."
+    //         title: "Harry potter",
+    //         author: "J K Rowling",
+    //         genre : "Fantasy",
+    //         image: "images.jpg",
+    //         description:"Harry Potter is a series of seven fantasy novels written by British author, J. K. Rowling. The novels chronicle the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's struggle against Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the Ministry of Magic and subjugate all wizards and Muggles (non-magical people) "
     //     },
     //     {
-    //         title: "Randamoozham",
-    //         author: "M T Vasudevan Nair",
-    //         genre: "Mythology, drama, historical fiction",
-    //         image: "randamoozham.jpg",
-    //         description: "Randamoozham is a 1984 Malayalam novel by Indian author M. T. Vasudevan Nair, widely credited as his masterpiece.The story begins with the incident of Mahaprasthanika Parva where the Pandavas leave for the pilgrimage to Himalayas forsaking all the worldly possessions. The story runs through the eyes of Bhima who faces seemingly severe frustrations as a young man."
-    //     },
-    //     {
-    //         title: "Digital Fortress",
-    //         author: "Dan Brown",
-    //         genre: "Thriller",
-    //         image: "digital.jpeg",
-    //         description: "Digital Fortress is a techno-thriller novel written by American author Dan Brown and published in 1998 by St. Martin's Press. The book explores the theme of government surveillance of electronically stored information on the private lives of citizens, and the possible civil liberties and ethical implications of using such technology."
+    //         title: "Half Girlfriend",
+    //         author: "Chetan Bhagat",
+    //         genre : "Romance",
+    //         image: "712HEn9SNwL.jpg",
+    //         description:"Half Girlfriend is an Indian English coming of age, young adult romance novel by Indian author Chetan Bhagat. The novel, set in rural Bihar, New Delhi, Patna, and New York, is the story of a Bihari boy in quest of winning over the girl he loves. This is Bhagat's sixth novel which was released on 1 October 2014 by Rupa Publications. The novel has also been published in Hindi and Gujarati."
     //     }
     // ];
-
-    booksRouter.get('/', function(req, res) {
-        Bookdata.find()
-            .then(function(books) {
-                res.render("books", {
-                    nav,
-                    title: 'Library',
-                    books
-                });
-            })
-
+    
+    booksRouter.get('/',isAuth,function(req,res){
+        bookData.find()
+        .then(function(books){
+            res.render("books",
+            {
+                nav,
+                title:'Library',
+                books
+            });
+        })  
+    });
+    
+    booksRouter.get('/:id',function(req,res){
+        var id = req.params.id;
+        bookData.findOne({_id:id})
+        .then(function(book){
+            res.render('book.ejs',
+            {
+                nav,
+                title:'Library',
+                book
+            });
+        })
     });
 
-    booksRouter.get('/:i', function(req, res) {
-        var i = req.params.i;
-        Bookdata.findOne({ _id: i })
-            .then(function(book) {
-                res.render('book.ejs', {
-                    nav,
-                    title: 'Library',
-                    book
-                });
-            })
-
+    booksRouter.post('/delete/:id',async(req,res)=>{
+        await bookData.findByIdAndDelete(req.params.id);
+        res.redirect('/books');
     });
 
     return booksRouter;
